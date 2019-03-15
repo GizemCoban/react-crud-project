@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Menu, Dropdown, Image } from 'semantic-ui-react'
 import faker from 'faker'
 import MyModal from './MyModal'
-import { connect} from 'react-redux'
 
 
 class MyNavb extends Component {
@@ -28,13 +27,13 @@ class MyNavb extends Component {
         { key: 4, text: 'Authority', value: 6, icon: 'wrench' }
       ]
     }
-    console.log(this.props)
+    //console.log(this.props)
   }
 
-  handleItemClick = (e, { name }) => (e.preventDefault(), this.setState({ activeItem: name }))
-  handleChange = (e, { value }) => (e.preventDefault(),
+  handleItemClick = (e, {name}) => (this.setState({activeItem: name}))
+  handleChange = (e, {value}) => (
     this.setState({ value }, () => {
-      if (value === 9) this.setState({ modalOpen: true })
+      if (value === 9) this.setState({modalOpen: true, value: 0})
       //else if ....
     }))
   handleOpen = () => this.setState({ modalOpen: true })
@@ -49,6 +48,7 @@ class MyNavb extends Component {
 
     const { activeItem } = this.state.activeItem
     const { value } = this.state.value
+    console.log(this.state.value)
     return (<div>
         <Menu stackable inverted color='teal'>
           <Menu.Item>
@@ -97,8 +97,5 @@ class MyNavb extends Component {
   }
 }
 
-const mapStateToProps = state =>{
-  return state
-}
 
-export default connect(mapStateToProps)(MyNavb)
+export default MyNavb
