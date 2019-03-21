@@ -4,12 +4,18 @@ import {Form, Dropdown, Button, Modal, Image, Header} from "semantic-ui-react";
 
 class MyModal extends Component {
 
+    constructor(props) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+
     handleInput({input}) {
         return (
             <div>
                 <Form.Field>
                     <label>Name</label>
-                    <input placeholder='Tenant Name' {...input}/>
+                    <input placeholder='Tenant Name' {...input} autoComplete='off'/>
                 </Form.Field>
             </div>
         )
@@ -44,7 +50,7 @@ class MyModal extends Component {
     render() {
         return (
             <div>
-                <Modal open={this.props.open} onClose={this.props.onClose} dimmer="blurring" size="small">
+                <Modal open={this.props.open} onClose={this.props.onClose} dimmer="blurring" size="small" closeIcon>
                     <Modal.Header>Tenant adding</Modal.Header>
                     <Modal.Content image>
                         <Image wrapped size='small' src='https://react.semantic-ui.com/images/avatar/large/rachel.png'/>

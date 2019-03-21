@@ -1,14 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App.js'
-import {createStore} from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import {Provider} from 'react-redux'
 import rootReducer from './reducers'
+import thunk from 'redux-thunk'
+import {createLogger} from "redux-logger/src";
 
-const store = createStore(rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
-//console.log(store.getState())
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, createLogger())));
+store.subscribe(() => {
+    console.log('Store Changed', store.getState())
+});
 ReactDOM.render(
     <Provider store={store}>
         <App/>

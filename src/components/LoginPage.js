@@ -4,14 +4,12 @@ import Logo from './semantic/Logo'
 import LoginForm from './semantic/LoginForm'
 
 
-class LoginPage extends React.Component {
-
-  render() {
+const LoginPage = () => {
     return (
       <div className='ortala'>
           <div className='golge'>
             <Segment color="green" size='massive' padded id="golge">
-              <div style={{ textAlign: 'center' }}>IoT Platform</div>
+                <div style={{textAlign: 'center'}}>Login Page</div>
               <br/>
               <Logo/>
               <LoginForm/>
@@ -19,7 +17,6 @@ class LoginPage extends React.Component {
           </div>
       </div>
     )
-  }
 }
 
 export default LoginPage

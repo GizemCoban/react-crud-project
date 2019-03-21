@@ -15,7 +15,7 @@ const Logo = () => {
                    style={{ height: 210 }}/>
           </Reveal.Content>
         </Reveal></div>);
-}
+};
 
 
 export default Logo;

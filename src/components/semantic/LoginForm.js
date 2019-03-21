@@ -1,45 +1,121 @@
 import React from 'react';
 import {Button, Form, Icon, Divider} from 'semantic-ui-react';
+import {Field, reduxForm} from "redux-form";
+import {withRouter} from 'react-router-dom'
+import {connect} from "react-redux";
+import {loginUser} from '../../actions'
 
 class LoginForm extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {username: '', password: ''};
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        //this.state = {loggedIn: false};
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+    }
+
+    handleUserError({error, touched, visited}) {
+        if (error && touched && visited) {
+
+            return (<div className="ui icon message red">
+                <i className="exclamation icon"></i>
+                <div className="content">
+                    <div className="header">
+                        Hata
+                    </div>
+                    <p>{error}</p>
+                </div>
+            </div>)
+        }
+
+    }
+
+    handlePassError({error, touched, visited}) {
+        if (error && touched && visited) {
+            return (<div className="ui icon message red">
+                <i className="exclamation icon"></i>
+                <div className="content">
+                    <div className="header">
+                        Hata
+                    </div>
+                    <p>{error}</p>
+                </div>
+            </div>)
+        }
+
+    }
+
+    handleUsername = ({input, meta}) => {
+        //console.log(meta);
+        return (
+            <div>
+                <Form.Input icon='users' iconPosition='left' placeholder='Kullanıcı Adı' type='input' {...input}
+                            autoComplete='off'/>
+                {this.handleUserError(meta)}
+            </div>)
+    };
+
+    handlePassword = ({input, meta}) => {
+        // console.log(meta)
+        return (
+            <div>
+                <Form.Input icon='key' iconPosition='left' placeholder='Şifre' type='password' {...input}
+                            autoComplete='off'/>
+                {this.handlePassError(meta)}
+            </div>)
+    };
+
+    handleSubmit = async (formValues) => {
+        //console.log(formValues);
+        const result = await this.props.loginUser(formValues);
+        if (result.status === 200) {
+            this.props.history.push("/dashboard");
+        } else if (result.status === 401) {
+            console.log('yetkisiz')
+        } else {
+            console.log(result.status)
+        }
+    };
 
 
-
-  handleSubmit(e) {
-    e.preventDefault();
-    /*console.log("Username: " + this.state.username + "\n Password: " + this.state.password);*/
-  }
-
-
-  render() {
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <Divider/>
-        <Form.Input icon='users' iconPosition='left' placeholder='Kullanıcı Adı' type='input'
-                    value={this.state.username} onChange={event => {
-          this.setState({username: event.target.value})
-        }}/>
-        <Form.Input icon='key' iconPosition='left' placeholder='Şifre' type='password'
-                    value={this.state.password} onChange={event => {
-          this.setState({password: event.target.value})
-        }}/>
-        <Divider/>
-        <Button type="submit" animated color="teal" fluid>
-          <Button.Content visible>Giriş</Button.Content>
-          <Button.Content hidden>
-            <Icon name='arrow alternate circle right'/>
-          </Button.Content>
-        </Button>
-        <Divider/>
-      </Form>
-    );
-  }
+    render() {
+        return (<div>
+                <Form error onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+                    <Divider/>
+                    <Field name='username' component={this.handleUsername}/>
+                    <br/>
+                    <Field name='password' component={this.handlePassword}/>
+                    <Divider/>
+                    <Button type="submit" animated color="teal" fluid>
+                        <Button.Content visible>Giriş</Button.Content>
+                        <Button.Content hidden>
+                            <Icon name='arrow alternate circle right'/>
+                        </Button.Content>
+                    </Button>
+                    <Divider/>
+                </Form>
+            </div>
+        );
+    }
 }
 
-export default LoginForm;
+const validate = (formValues) => {
+    const errors = {};
+
+    if (!formValues.username) {
+        errors.username = 'Kullanıcı adı boş olmamalı';
+    }
+
+    if (!formValues.password) {
+        errors.password = 'Şifre boş olamaz';
+    }
+
+    return errors;
+};
+
+const formWrap = (reduxForm({
+    form: 'LoginForm',
+    validate
+})(withRouter((LoginForm))));
+
+export default connect(null, {loginUser})(formWrap);

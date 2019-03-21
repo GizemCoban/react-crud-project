@@ -33,66 +33,63 @@ class MyNavb extends Component {
   handleItemClick = (e, {name}) => (this.setState({activeItem: name}))
   handleChange = (e, {value}) => (
     this.setState({ value }, () => {
-      if (value === 9) this.setState({modalOpen: true, value: 0})
+      if (value === 9) this.setState({modalOpen: true, value: ''})
       //else if ....
     }))
   handleOpen = () => this.setState({ modalOpen: true })
   handleClose = () => this.setState({ modalOpen: false })
 
-  render() {
-    const triggerM = (
+  triggerM = (
       <span>
         <Image avatar src={faker.internet.avatar()}/> {faker.name.findName()}
       </span>
-    )
+  )
 
+  componentWillMount() {
+    {
+      this.setState({value: ''})
+    }
+  }
+
+  render() {
     const { activeItem } = this.state.activeItem
-    const { value } = this.state.value
     console.log(this.state.value)
-    return (<div>
-        <Menu stackable inverted color='teal'>
-          <Menu.Item>
-            <Image fluid src="http://www.netas.com.tr/media/13945/netas.png" size="tiny"/>
-          </Menu.Item>
-          <Menu.Item>
-            <Dropdown
-              onChange={this.handleChange}
-              value={value}
-              icon="angle down"
-              text="Menu"
-              options={this.state.optMenu}
-            />
-          </Menu.Item>
+    return (
+        <div>
+          <Menu stackable inverted color='teal'>
+            <Menu.Item>
+              <Image src="http://www.netas.com.tr/media/13945/netas.png" size="tiny"/>
+            </Menu.Item>
+            <Menu.Item>
+              <Dropdown
+                  onChange={this.handleChange}
+                  value={this.state.value}
+                  icon="angle down"
+                  text="Menu"
+                  options={this.state.optMenu}
+                  defaultValue={this.state.defaultValue}
+                  simple
+              />
+            </Menu.Item>
 
-          <Menu.Item
-            name='features'
-            active={activeItem === 'features'}
-            onClick={this.handleItemClick}
-          >
-            Features
-          </Menu.Item>
+            <Menu.Item
+                name='features'
+                active={activeItem === 'features'}
+                onClick={this.handleItemClick}
+            >
+              Features
+            </Menu.Item>
 
-          <Menu.Item
-            name='testimonials'
-            active={activeItem === 'testimonials'}
-            onClick={this.handleItemClick}
-          >
-            Testimonials
-          </Menu.Item>
+            <Menu.Item position='right'>
+              <Dropdown text='Username' options={this.state.optUser} trigger={this.triggerM} selection
+                        value={this.state.value}
+                        onChange={this.handleChange}/>
+            </Menu.Item>
 
-          <Menu.Item name='sign-in' active={activeItem === 'sign-in'} onClick={this.handleItemClick}>
-            Sign-in
-          </Menu.Item>
+          </Menu>
+          <MyModal open={this.state.modalOpen} onClose={this.handleClose}/>
 
-          <Menu.Item position='right'>
-            <Dropdown text='Username' options={this.state.optUser} trigger={triggerM} selection value={this.state.value}
-                      onChange={this.handleChange}/>
-          </Menu.Item>
-
-        </Menu>
-        <MyModal open={this.state.modalOpen} onClose={this.handleClose}/>
-      </div>
-
+        </div>
     )
   }
 }
