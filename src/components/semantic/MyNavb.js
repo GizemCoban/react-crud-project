@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Menu, Dropdown, Image} from 'semantic-ui-react'
 import faker from 'faker'
-import MyModal from './MyModal'
+//import MyModal from './MyModal'
 import {withRouter} from "react-router-dom";
 
 class MyNavb extends Component {
@@ -92,7 +92,7 @@ class MyNavb extends Component {
                                   onChange={this.handleChange}/>
                     </Menu.Item>
                 </Menu>
-                <MyModal open={this.state.modalOpen} onClose={this.handleClose}/>
+                {/*<MyModal open={this.state.modalOpen} onClose={this.handleClose}/>*/}
             </div>
         )
     }

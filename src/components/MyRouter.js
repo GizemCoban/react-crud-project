@@ -1,8 +1,9 @@
 import React from 'react'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
-import LoginPage from './LoginPage'
-import DashContent from './semantic/DashContent'
 import {createBrowserHistory} from 'history'
+
+import LoginPage from './LoginPage'
+import DashContent from './DashContent'
 import Tenants from "./Tenants";
 import Users from "./Users";
 import Roles from "./Roles";
