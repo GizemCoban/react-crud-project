@@ -10,9 +10,9 @@ import {createLogger} from "redux-logger/src";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, createLogger())));
-store.subscribe(() => {
-    console.log('Store Changed', store.getState())
-});
+// store.subscribe(() => {
+//     console.log('Store Changed', store.getState())
+// });
 ReactDOM.render(
     <Provider store={store}>
         <App/>

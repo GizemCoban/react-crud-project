@@ -1,18 +1,23 @@
 import React from 'react';
-import {Button, Form, Icon, Divider} from 'semantic-ui-react';
-import {Field, reduxForm} from "redux-form";
+import {Button, Form, Icon, Divider, Header, Modal} from 'semantic-ui-react';
+import {Field, reduxForm, reset} from "redux-form";
 import {withRouter} from 'react-router-dom'
 import {connect} from "react-redux";
 import {loginUser} from '../../actions'
+
 
 class LoginForm extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {errorModal: false};
         //this.state = {loggedIn: false};
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
+
+    handleCloseModal = () => this.setState({errorModal: false});
+
 
     handleUserError({error, touched, visited}) {
         if (error && touched && visited) {
@@ -65,16 +70,19 @@ class LoginForm extends React.Component {
             </div>)
     };
 
-    handleSubmit = async (formValues) => {
+    handleSubmit = async (formValues, dispatch) => {
         //console.log(formValues);
         const result = await this.props.loginUser(formValues);
         if (result.status === 200) {
             this.props.history.push("/dashboard");
         } else if (result.status === 401) {
-            console.log('yetkisiz')
+            console.log('hata--unauthorized');
+            this.setState({errorModal: true})
         } else {
+            this.setState({errorModal: true});
             console.log(result.status)
         }
+        dispatch(reset('LoginForm')) // form temizlemek
     };
 
 
@@ -94,6 +102,19 @@ class LoginForm extends React.Component {
                     </Button>
                     <Divider/>
                 </Form>
+
+
+                <Modal open={this.state.errorModal} onClose={this.handleCloseModal} closeIcon size='small'>
+                    <Header icon='archive' content='Hata'/>
+                    <Modal.Content>
+                        <p style={{textAlign: 'center'}}>Giriş Yapılamadı</p>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button color='green' inverted circular onClick={this.handleCloseModal}>
+                            <Icon name='checkmark'/> OK
+                        </Button>
+                    </Modal.Actions>
+                </Modal>
             </div>
         );
     }
@@ -109,7 +130,6 @@ const validate = (formValues) => {
     if (!formValues.password) {
         errors.password = 'Şifre boş olamaz';
     }
-
     return errors;
 };
 

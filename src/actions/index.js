@@ -11,7 +11,7 @@ export const loginUser = (formvalues) => async dispatch => {
                 password: formvalues.password
             }
         });
-        dispatch({type: LOGIN_USER, payload: response})
+        dispatch({type: LOGIN_USER, payload: response});
         return response;
     } catch (err) {
         return err.response;
