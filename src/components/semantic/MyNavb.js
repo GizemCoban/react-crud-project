@@ -24,7 +24,6 @@ class MyNavb extends Component {
         //console.log(this.props)
     }
 
-    handleItemClick = (e, {name}) => (this.setState({activeItem: name}));
     handleItemT = (e, {name}) => {
         (this.setState({activeItem: name}))
         return this.props.history.push('/tenants')
