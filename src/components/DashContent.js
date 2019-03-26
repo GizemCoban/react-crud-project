@@ -22,13 +22,33 @@ class DashContent extends Component {
                     <div className="ui horizontal segments">
                         <div className="ui segment">
                             <VictoryPie
+                                events={[{
+                                    target: "data",
+                                    eventHandlers: {
+                                        onClick: () => {
+                                            return [
+                                                {
+                                                    target: "data",
+                                                    mutation: (props) => {
+                                                        const fill = props.style && props.style.fill;
+                                                        return fill === "#c43a31" ? null : { style: { fill: "#c43a31" } };
+                                                    }
+                                                }, {
+                                                    target: "labels",
+                                                    mutation: (props) => {
+                                                        return props.text === "clicked" ? null : { text: "clicked" };
+                                                    }
+                                                }
+                                            ];
+                                        }
+                                    }
+                                }]}
                                 data={[
                                     { x: "Tenants", y: 20 },
                                     { x: "Users", y: 40 },
                                     { x: "Roles", y: 10 },
                                     { x: "Auth", y: 30 }
                                 ]}
-                                animate={{duration:2000}}
                                 colorScale={["tomato", "orange", "gold", "cyan", "navy" ]}
                             />
                         </div>

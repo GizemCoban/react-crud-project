@@ -4,6 +4,7 @@ import {Field, reduxForm, reset} from "redux-form";
 import {withRouter} from 'react-router-dom'
 import {connect} from "react-redux";
 import {loginUser} from '../../actions'
+import authReducer from "../../reducers/authReducer";
 
 
 class LoginForm extends React.Component {
@@ -135,6 +136,7 @@ const validate = (formValues) => {
 
 const formWrap = (reduxForm({
     form: 'LoginForm',
+    auth: authReducer,
     validate
 })(withRouter((LoginForm))));
 

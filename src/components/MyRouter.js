@@ -9,6 +9,8 @@ import Users from "./Users";
 import Roles from "./Roles";
 import Authority from "./Authority";
 
+import requireAuth from '../utils/requireAuth'
+
 const history = createBrowserHistory();
 
 class MyRouter extends React.Component {
@@ -17,14 +19,13 @@ class MyRouter extends React.Component {
             <Router history={history}>
                 <div>
                     <Route exact strict path="/login" component={LoginPage}/>
-                    <Route exact strict path="/dashboard" component={DashContent}/>
-                    <Route exact strict path="/tenants" component={Tenants}/>
-                    <Route exact strict path="/users" component={Users}/>
-                    <Route exact strict path="/roles" component={Roles}/>
-                    <Route exact strict path="/authority" component={Authority}/>
+                    <Route exact strict path="/dashboard" component={requireAuth(DashContent)}/>
+                    <Route exact strict path="/tenants" component={requireAuth(Tenants)}/>
+                    <Route exact strict path="/users" component={requireAuth(Users)}/>
+                    <Route exact strict path="/roles" component={requireAuth(Roles)}/>
+                    <Route exact strict path="/authority" component={requireAuth(Authority)}/>
                 </div>
             </Router>
-
         )
     }
 }

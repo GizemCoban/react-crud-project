@@ -1,20 +1,16 @@
 import React, {Component} from 'react'
 import {Menu, Dropdown, Image} from 'semantic-ui-react'
-import faker from 'faker'
 //import MyModal from './MyModal'
 import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {logout} from '../../actions'
 
 class MyNavb extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            value: '', modalOpen: false,
-            optUser: [
-                {key: 1, text: 'Profil', value: 1, icon: 'user'},
-                {key: 2, text: 'Ayarlar', value: 2, icon: 'options'},
-                {key: 3, text: 'Çıkış', value: 3, icon: 'log out'}
-            ]
+            modalOpen: false,
         };
         this.handleRedirectDash = this.handleRedirectDash.bind(this);
         this.handleItemA = this.handleItemA.bind(this);
@@ -25,19 +21,19 @@ class MyNavb extends Component {
     }
 
     handleItemT = (e, {name}) => {
-        (this.setState({activeItem: name}))
+        (this.setState({activeItem: name}));
         return this.props.history.push('/tenants')
     };
     handleItemU = (e, {name}) => {
-        (this.setState({activeItem: name}))
+        (this.setState({activeItem: name}));
         return this.props.history.push('/users')
     };
     handleItemR = (e, {name}) => {
-        (this.setState({activeItem: name}))
+        (this.setState({activeItem: name}));
         return this.props.history.push('/roles')
     };
     handleItemA = (e, {name}) => {
-        (this.setState({activeItem: name}))
+        (this.setState({activeItem: name}));
         return this.props.history.push('/authority')
     };
     //handleOpen = () => this.setState({modalOpen: true})
@@ -45,13 +41,15 @@ class MyNavb extends Component {
     handleRedirectDash = () => {
         return this.props.history.push('/dashboard')
     };
-    triggerM = (
-        <span>
-        <Image avatar src={faker.internet.avatar()}/> {faker.name.findName()}
-      </span>
-    );
+
+    logout(e) {
+        e.preventDefault();
+        this.props.logout();
+        this.props.history.push('/login');
+    }
 
     render() {
+        const {isAuthenticated} = this.props.auth;
         const {activeItem} = this.state;
         console.log(this.state.value);
         return (
@@ -86,10 +84,19 @@ class MyNavb extends Component {
                         onClick={this.handleItemA}
                     >
                     </Menu.Item>
+                    <Menu.Item
+                        name='Logout'
+                        active={activeItem === 'Logout'}
+                        onClick={this.logout.bind(this)}
+                    >
+                    </Menu.Item>
                     <Menu.Item position='right'>
-                        <Dropdown text='Username' options={this.state.optUser} trigger={this.triggerM} selection
-                                  value={this.state.value}
-                                  onChange={this.handleChange}/>
+                        <Dropdown text='Username' selection>
+                            <Dropdown.Menu direction='left'>
+                                <Dropdown.Divider/>
+                                <Dropdown.Item text='Çıkış' onClick={this.logout.bind(this)}/>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </Menu.Item>
                 </Menu>
                 {/*<MyModal open={this.state.modalOpen} onClose={this.handleClose}/>*/}
@@ -98,4 +105,10 @@ class MyNavb extends Component {
     }
 }
 
-export default withRouter(MyNavb)
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, {logout})(withRouter(MyNavb))
