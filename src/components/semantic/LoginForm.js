@@ -72,6 +72,7 @@ class LoginForm extends React.Component {
     };
 
     handleSubmit = async (formValues, dispatch) => {
+        console.log(this.props.history.location.pathname);
         //console.log(formValues);
         const result = await this.props.loginUser(formValues);
         if (result.status === 200) {

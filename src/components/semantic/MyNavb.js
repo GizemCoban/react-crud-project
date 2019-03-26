@@ -84,12 +84,6 @@ class MyNavb extends Component {
                         onClick={this.handleItemA}
                     >
                     </Menu.Item>
-                    <Menu.Item
-                        name='Logout'
-                        active={activeItem === 'Logout'}
-                        onClick={this.logout.bind(this)}
-                    >
-                    </Menu.Item>
                     <Menu.Item position='right'>
                         <Dropdown text='Username' selection>
                             <Dropdown.Menu direction='left'>

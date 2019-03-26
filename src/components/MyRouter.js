@@ -18,7 +18,7 @@ class MyRouter extends React.Component {
         return (
             <Router history={history}>
                 <div>
-                    <Route exact strict path="/login" component={LoginPage}/>
+                    <Route exact strict path="/login" component={requireAuth(LoginPage)}/>
                     <Route exact strict path="/dashboard" component={requireAuth(DashContent)}/>
                     <Route exact strict path="/tenants" component={requireAuth(Tenants)}/>
                     <Route exact strict path="/users" component={requireAuth(Users)}/>
