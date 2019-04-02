@@ -8,10 +8,12 @@ export default function (ComposedComponent) {
         componentWillMount() {
             if (!this.props.isAuthenticated) {
                 this.props.history.push('/login');
-            } else if ((this.props.isAuthenticated) && (this.props.history.location.pathname === '/login')){
+            }
+            if ((this.props.isAuthenticated) && (this.props.history.location.pathname === '/login')) {
                 this.props.history.push('/dashboard')
             }
         }
+
         render() {
             return (
                 <ComposedComponent{...this.props}/>

@@ -11,13 +11,14 @@ import {setCurrentUser} from "./actions";
 import jwt from 'jsonwebtoken'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const logger = createLogger({predicate: (getState, action) => !action.type.includes('@@redux-form')});
 
-const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, createLogger())));
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk, logger)));
 // store.subscribe(() => {
 //     console.log('Store Changed', store.getState())
 // });
 
-if (localStorage.jwtToken){
+if (localStorage.jwtToken) {
     setAuthorizationToken(localStorage.jwtToken);
     store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)))
 }

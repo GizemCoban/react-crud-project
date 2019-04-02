@@ -51,7 +51,7 @@ class MyNavb extends Component {
     render() {
         const {isAuthenticated} = this.props.auth;
         const {activeItem} = this.state;
-        console.log(this.state.value);
+       // console.log(this.state.value);
         return (
             <div>
                 <Menu stackable inverted color='teal'>

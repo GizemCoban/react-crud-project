@@ -72,17 +72,15 @@ class LoginForm extends React.Component {
     };
 
     handleSubmit = async (formValues, dispatch) => {
-        console.log(this.props.history.location.pathname);
-        //console.log(formValues);
+        // console.log(this.props.history.location.pathname);
+        // console.log(JSON.stringify(formValues));
         const result = await this.props.loginUser(formValues);
+        console.log(result);
         if (result.status === 200) {
             this.props.history.push("/dashboard");
-        } else if (result.status === 401) {
-            console.log('hata--unauthorized');
-            this.setState({errorModal: true})
         } else {
             this.setState({errorModal: true});
-            console.log(result.status)
+            console.log(result)
         }
         dispatch(reset('LoginForm')) // form temizlemek
     };
@@ -92,7 +90,7 @@ class LoginForm extends React.Component {
         return (<div>
                 <Form error onSubmit={this.props.handleSubmit(this.handleSubmit)}>
                     <Divider/>
-                    <Field name='username' component={this.handleUsername}/>
+                    <Field name='email' component={this.handleUsername}/>
                     <br/>
                     <Field name='password' component={this.handlePassword}/>
                     <Divider/>

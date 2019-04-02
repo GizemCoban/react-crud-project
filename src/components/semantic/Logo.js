@@ -7,7 +7,7 @@ const Logo = () => {
         <div>
             <Reveal animated='small fade'>
                 <Reveal.Content visible>
-                    <Image src='https://betanews.com/wp-content/uploads/2017/04/IOT_Internet_of_Things_2017.jpg'
+                    <Image src={'https://betanews.com/wp-content/uploads/2017/04/IOT_Internet_of_Things_2017.jpg'}
                            size='medium' centered style={{width: 400}}/>
                 </Reveal.Content>
                 <Reveal.Content hidden>

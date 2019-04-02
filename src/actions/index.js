@@ -11,17 +11,14 @@ export function setCurrentUser(user) {
 }
 
 export const loginUser = (formvalues) => async dispatch => {
+    const values=JSON.stringify(formvalues);
+    const headers = {
+        'Content-Type': 'application/json'
+    };
     try {
-        const response = await axios({
-            method: 'post',
-            url: '/api/v1/auth/login',
-            params: {
-                username: formvalues.username,
-                password: formvalues.password
-            }
-        });
+        const response = await axios.post('api/users/login', values, {headers:headers});
         //dispatch({type: LOGIN_USER, payload: response});
-        const token = response.data;
+        const token = response.data.token;
         console.log(jwt.decode(token));
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);

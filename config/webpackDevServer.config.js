@@ -82,7 +82,7 @@ module.exports = function(proxy, allowedHost) {
     },
     public: allowedHost,
     proxy: {
-      '/api/**': 'http://10.254.21.106:8086',
+      '/api/**': 'http://10.254.20.104:5000',
       changeOrigin: true
     },
     before(app, server) {

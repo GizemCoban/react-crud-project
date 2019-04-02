@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route, BrowserRouter as Router} from 'react-router-dom'
+import {Switch, Route, BrowserRouter as Router, Redirect} from 'react-router-dom'
 import {createBrowserHistory} from 'history'
 
 import LoginPage from './LoginPage'
@@ -8,6 +8,7 @@ import Tenants from "./Tenants";
 import Users from "./Users";
 import Roles from "./Roles";
 import Authority from "./Authority";
+import ErrorPage from './semantic/ErrorPage'
 
 import requireAuth from '../utils/requireAuth'
 
@@ -17,14 +18,16 @@ class MyRouter extends React.Component {
     render() {
         return (
             <Router history={history}>
-                <div>
+                <Switch>
                     <Route exact strict path="/login" component={requireAuth(LoginPage)}/>
                     <Route exact strict path="/dashboard" component={requireAuth(DashContent)}/>
                     <Route exact strict path="/tenants" component={requireAuth(Tenants)}/>
                     <Route exact strict path="/users" component={requireAuth(Users)}/>
                     <Route exact strict path="/roles" component={requireAuth(Roles)}/>
                     <Route exact strict path="/authority" component={requireAuth(Authority)}/>
-                </div>
+                    <Redirect from="/" to="/login"/>
+                    <Route path='*' component={ErrorPage}/>
+                </Switch>
             </Router>
         )
     }
