@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Header, Icon, Segment} from "semantic-ui-react";
 import {withRouter} from "react-router-dom";
 
-const myStyle = {
+const errorContentStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -19,8 +19,8 @@ class ErrorPage extends Component {
 
     render() {
         return (
-            <div style={myStyle}>
-                <Segment textAlign='center'>
+            <div style={errorContentStyle}>
+                <Segment textAlign='center' padded='very' secondary color='red'>
                     <Header as='h2' icon textAlign='center'>
                         <Icon name='wrench' circular/>
                         <Header.Content>Sayfa Bulunamadı</Header.Content>

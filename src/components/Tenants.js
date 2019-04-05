@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import MyNavb from "./semantic/MyNavb";
-//import MyModal from "./semantic/MyModal";
 import {Button, Dropdown, Form, Header, Image, Modal} from "semantic-ui-react";
 import {Field, reduxForm, reset} from "redux-form";
-
+import axios from "axios";
 
 
 class Tenants extends Component {
@@ -11,8 +10,8 @@ class Tenants extends Component {
         super(props);
         this.state = {
             modalOpen: false,
-            tName:'',
-            tStatus:''
+            tName: '',
+            tStatus: '',
         };
         this.handleClose = this.handleClose.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
@@ -26,17 +25,29 @@ class Tenants extends Component {
         this.setState({modalOpen: false});
 
     };
-    onSubmit = (formValues, dispatch) => {
+    onSubmit = formValues => async dispatch => {
         this.setState({modalOpen: false});
-        this.setState({tName:formValues.tName, tStatus:formValues.tStatus});
+        const headers = {'Content-Type': 'application/json'};
+        const values = JSON.stringify({
+            tName: formValues.tName,
+            tStatus: formValues.tStatus === 1 ? true : false
+        });
+        console.log(values);
+        try {
+            const response = await axios.post('api/tenants/add', values, {headers: headers});
+            console.log(response)
+        } catch (e) {
+            console.log(e.message);
+        }
         dispatch(reset('Tenants'));
     };
+
 
     handleDropdown({input}) {
         const options = [
             {key: 'e', text: 'Enabled', value: 1},
             {key: 'd', text: 'Disabled', value: 0}
-            ];
+        ];
         return (<div>
                 <Form.Field>
                     <label>State</label>
@@ -44,6 +55,7 @@ class Tenants extends Component {
                         {...input}
                         options={options}
                         placeholder='Choose an option'
+                        button
                         selection
                         value={input.value}
                         onChange={(param, data) => input.onChange(data.value)}

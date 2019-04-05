@@ -4,6 +4,7 @@ import {Menu, Dropdown, Image} from 'semantic-ui-react'
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from '../../actions'
+import axios from 'axios'
 
 class MyNavb extends Component {
 
@@ -11,6 +12,7 @@ class MyNavb extends Component {
         super(props);
         this.state = {
             modalOpen: false,
+            username: ''
         };
         this.handleRedirectDash = this.handleRedirectDash.bind(this);
         this.handleItemA = this.handleItemA.bind(this);
@@ -36,11 +38,23 @@ class MyNavb extends Component {
         (this.setState({activeItem: name}));
         return this.props.history.push('/authority')
     };
-    //handleOpen = () => this.setState({modalOpen: true})
     //handleClose = () => this.setState({modalOpen: false})
     handleRedirectDash = () => {
         return this.props.history.push('/dashboard')
     };
+
+    //handleOpen = () => this.setState({modalOpen: true})
+    async componentDidMount() {
+        try {
+            const response = await axios.get('api/users/me');
+            this.setState({username: response.data.email})
+        } catch (err) {
+            if(err.response.status===401){
+                this.props.logout();
+            }
+            console.log(err.message)
+        }
+    }
 
     logout(e) {
         e.preventDefault();
@@ -51,7 +65,7 @@ class MyNavb extends Component {
     render() {
         const {isAuthenticated} = this.props.auth;
         const {activeItem} = this.state;
-       // console.log(this.state.value);
+        // console.log(this.state.value);
         return (
             <div>
                 <Menu stackable inverted color='teal'>
@@ -85,7 +99,7 @@ class MyNavb extends Component {
                     >
                     </Menu.Item>
                     <Menu.Item position='right'>
-                        <Dropdown text='Username' selection>
+                        <Dropdown text={this.state.username} selection>
                             <Dropdown.Menu direction='left'>
                                 <Dropdown.Divider/>
                                 <Dropdown.Item text='Çıkış' onClick={this.logout.bind(this)}/>

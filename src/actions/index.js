@@ -1,7 +1,13 @@
 import axios from 'axios'
-import {SET_CURRENT_USER} from './types'
 import setAuthorizationToken from "../utils/setAuthorizationToken"
 import jwt from 'jsonwebtoken'
+import {
+    SET_CURRENT_USER,
+    DELETE_TENANT,
+    EDIT_TENANT,
+    FETCH_TENANT,
+    FETCH_TENANTS
+} from './types'
 
 export function setCurrentUser(user) {
     return {
@@ -36,3 +42,8 @@ export function logout() {
         dispatch(setCurrentUser({}));
     }
 }
+
+export const fetchTenants = () => async dispatch =>{
+    const response = await axios.get('/api/tenants/getAll');
+    dispatch({type: FETCH_TENANTS, payload:response.data})
+};

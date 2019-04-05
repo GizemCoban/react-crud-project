@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
         if (error && touched && visited) {
 
             return (<div className="ui icon message red">
-                <i className="exclamation icon"></i>
+                <i className="exclamation icon"/>
                 <div className="content">
                     <div className="header">
                         Hata

@@ -25,8 +25,8 @@ class MyRouter extends React.Component {
                     <Route exact strict path="/users" component={requireAuth(Users)}/>
                     <Route exact strict path="/roles" component={requireAuth(Roles)}/>
                     <Route exact strict path="/authority" component={requireAuth(Authority)}/>
-                    <Redirect from="/" to="/login"/>
-                    <Route path='*' component={ErrorPage}/>
+                    <Redirect exact from="/" to="/login"/>
+                    <Route path='/*' component={ErrorPage}/>
                 </Switch>
             </Router>
         )
