@@ -1,80 +1,26 @@
 import React, {Component} from 'react';
 import MyNavb from "./semantic/MyNavb";
-import {Button, Dropdown, Form, Header, Image, Modal} from "semantic-ui-react";
-import {Field, reduxForm, reset} from "redux-form";
-import axios from "axios";
+import {Button, Header} from "semantic-ui-react";
+import {connect} from "react-redux";
+import {fetchTenants} from '../actions'
+import {withRouter} from "react-router-dom";
+import Draggable from 'react-draggable'
 
 
 class Tenants extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            modalOpen: false,
-            tName: '',
-            tStatus: '',
-        };
-        this.handleClose = this.handleClose.bind(this);
+        this.state = {};
         this.handleOpen = this.handleOpen.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchTenants();
     }
 
     handleOpen = () => {
-        this.setState({modalOpen: true})
+        this.props.history.push('/tenants/add')
     };
-    handleClose = () => {
-        this.setState({modalOpen: false});
-
-    };
-    onSubmit = formValues => async dispatch => {
-        this.setState({modalOpen: false});
-        const headers = {'Content-Type': 'application/json'};
-        const values = JSON.stringify({
-            tName: formValues.tName,
-            tStatus: formValues.tStatus === 1 ? true : false
-        });
-        console.log(values);
-        try {
-            const response = await axios.post('api/tenants/add', values, {headers: headers});
-            console.log(response)
-        } catch (e) {
-            console.log(e.message);
-        }
-        dispatch(reset('Tenants'));
-    };
-
-
-    handleDropdown({input}) {
-        const options = [
-            {key: 'e', text: 'Enabled', value: 1},
-            {key: 'd', text: 'Disabled', value: 0}
-        ];
-        return (<div>
-                <Form.Field>
-                    <label>State</label>
-                    <Dropdown
-                        {...input}
-                        options={options}
-                        placeholder='Choose an option'
-                        button
-                        selection
-                        value={input.value}
-                        onChange={(param, data) => input.onChange(data.value)}
-                    />
-                </Form.Field>
-            </div>
-        )
-    };
-
-    handleInput({input}) {
-        return (
-            <div>
-                <Form.Field>
-                    <label>Name</label>
-                    <input placeholder='Tenant Name' {...input} autoComplete='off'/>
-                </Form.Field>
-            </div>
-        )
-    }
 
 
     render() {
@@ -94,28 +40,48 @@ class Tenants extends Component {
                     <Header as='h3'>
                         All Tenants
                     </Header>
-                    <Modal open={this.state.modalOpen} onClose={this.handleClose} dimmer="blurring" size="small"
-                           closeIcon>
-                        <Modal.Header>Tenant adding</Modal.Header>
-                        <Modal.Content image>
-                            <Image wrapped size='small'
-                                   src='https://react.semantic-ui.com/images/avatar/large/rachel.png'/>
-                            <Modal.Description>
-                                <Header as="h3">Tenant Information</Header>
-                                <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                                    <Form.Group>
-                                        <Field name='tName' component={this.handleInput}/>
-                                        <Field name='tStatus' component={this.handleDropdown}/>
-                                    </Form.Group>
-                                    <Button type='submit' circular fluid color="teal">Add</Button>
-                                </Form>
-                            </Modal.Description>
-                        </Modal.Content>
-                    </Modal>
+                    <br/>
+                    <div className='ui cards'>
+                        {this.props.tenant.map(tenants => {
+                            return (
+                                <Draggable axis="both">
+                                    <div className="card" key={tenants._id}>
+                                        <div className="content">
+                                            <div className="header">
+                                                {tenants.tName}
+                                            </div>
+                                            <div className="meta">
+                                                Status: {tenants.tStatus === true ? (
+                                                <span style={{color: 'blue'}}>açık</span>) : (
+                                                <span style={{color: 'red'}}>kapalı</span>)}
+                                            </div>
+                                            <div className="description">
+                                                {tenants.date}
+                                            </div>
+                                        </div>
+                                        <div className="extra content">
+                                            <div className="ui two buttons">
+                                                <div className="ui basic green button">Edit</div>
+                                                <div className="ui basic red button">Remove</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Draggable>
+                            )
+                        })
+                        }
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default reduxForm({form: 'Tenants'})(Tenants);
+
+const mapStateToProps = (state) => {
+    return {tenant: Object.values(state.tenant)}
+};
+
+
+export default connect(mapStateToProps, {fetchTenants})(withRouter(Tenants));
+

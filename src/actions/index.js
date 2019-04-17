@@ -6,7 +6,8 @@ import {
     DELETE_TENANT,
     EDIT_TENANT,
     FETCH_TENANT,
-    FETCH_TENANTS
+    FETCH_TENANTS,
+    ADD_TENANT
 } from './types'
 
 export function setCurrentUser(user) {
@@ -45,5 +46,19 @@ export function logout() {
 
 export const fetchTenants = () => async dispatch =>{
     const response = await axios.get('/api/tenants/getAll');
-    dispatch({type: FETCH_TENANTS, payload:response.data})
+    dispatch({type: FETCH_TENANTS, payload:response.data});
+};
+
+export const addTenant = (formvalues)=> async dispatch=>{
+  //console.log(formvalues);
+  const headers = {
+      'Content-Type': 'application/json'
+  };
+  try {
+    const response= await axios.post('/api/tenants/add', formvalues, {headers:headers});
+      dispatch({type:ADD_TENANT, payload: response.data });
+      console.log('eklendi')
+  } catch (e) {
+      return console.log(e.message);
+  }
 };

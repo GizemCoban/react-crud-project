@@ -3,3 +3,4 @@ export const FETCH_TENANTS = 'FETCH_TENANTS';
 export const FETCH_TENANT = 'FETCH_TENANT';
 export const DELETE_TENANT = 'DELETE_TENANT';
 export const EDIT_TENANT = 'EDIT_TENANT';
+export const ADD_TENANT = 'ADD_TENANT';
