@@ -18,12 +18,12 @@ export function setCurrentUser(user) {
 }
 
 export const loginUser = (formvalues) => async dispatch => {
-    const values=JSON.stringify(formvalues);
+    const values = JSON.stringify(formvalues);
     const headers = {
         'Content-Type': 'application/json'
     };
     try {
-        const response = await axios.post('api/users/login', values, {headers:headers});
+        const response = await axios.post('api/users/login', values, {headers: headers});
         //dispatch({type: LOGIN_USER, payload: response});
         const token = response.data.token;
         console.log(jwt.decode(token));
@@ -44,21 +44,36 @@ export function logout() {
     }
 }
 
-export const fetchTenants = () => async dispatch =>{
+export const fetchTenants = () => async dispatch => {
     const response = await axios.get('/api/tenants/getAll');
-    dispatch({type: FETCH_TENANTS, payload:response.data});
+    dispatch({type: FETCH_TENANTS, payload: response.data});
 };
 
-export const addTenant = (formvalues)=> async dispatch=>{
-  //console.log(formvalues);
-  const headers = {
-      'Content-Type': 'application/json'
-  };
-  try {
-    const response= await axios.post('/api/tenants/add', formvalues, {headers:headers});
-      dispatch({type:ADD_TENANT, payload: response.data });
-      console.log('eklendi')
-  } catch (e) {
-      return console.log(e.message);
-  }
+export const fetchTenant = (id) => async dispatch => {
+    const response = await axios.get(`/api/tenants/findById/${id}`);
+    dispatch({type: FETCH_TENANT, payload: response.data});
+};
+
+export const editTenant = (id, formvalues) => async dispatch => {
+    const response = await axios.put(`/api/tenants/edit/${id}`);
+    dispatch({type: EDIT_TENANT, payload: response.data});
+};
+
+export const deleteTenant = (id) => async dispatch => {
+    const response = await axios.delete(`/api/tenants/delete/${id}`)
+    dispatch({type: DELETE_TENANT, payload: id})
+};
+
+export const addTenant = (formvalues) => async dispatch => {
+    //console.log(formvalues);
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    try {
+        const response = await axios.post('/api/tenants/add', formvalues, {headers: headers});
+        dispatch({type: ADD_TENANT, payload: response.data});
+        console.log('eklendi')
+    } catch (e) {
+        return console.log(e.message);
+    }
 };

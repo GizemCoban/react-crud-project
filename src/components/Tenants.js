@@ -3,7 +3,7 @@ import MyNavb from "./semantic/MyNavb";
 import {Button, Header} from "semantic-ui-react";
 import {connect} from "react-redux";
 import {fetchTenants} from '../actions'
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import Draggable from 'react-draggable'
 
 
@@ -61,8 +61,9 @@ class Tenants extends Component {
                                         </div>
                                         <div className="extra content">
                                             <div className="ui two buttons">
-                                                <div className="ui basic green button">Edit</div>
-                                                <div className="ui basic red button">Remove</div>
+                                                <Link to={`/tenants/edit/${tenants._id}`}
+                                                      className="ui basic green button">Edit</Link>
+                                                <Link to={"*"} className="ui basic red button">Remove</Link>
                                             </div>
                                         </div>
                                     </div>
