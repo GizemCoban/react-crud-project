@@ -44,8 +44,8 @@ class Tenants extends Component {
                     <div className='ui cards'>
                         {this.props.tenant.map(tenants => {
                             return (
-                                <Draggable axis="both">
-                                    <div className="card" key={tenants._id}>
+                                <Draggable axis="both" key={tenants._id}>
+                                    <div className="card">
                                         <div className="content">
                                             <div className="header">
                                                 {tenants.tName}
@@ -63,7 +63,8 @@ class Tenants extends Component {
                                             <div className="ui two buttons">
                                                 <Link to={`/tenants/edit/${tenants._id}`}
                                                       className="ui basic green button">Edit</Link>
-                                                <Link to={"*"} className="ui basic red button">Remove</Link>
+                                                <Link to={`/tenants/delete/${tenants._id}`}
+                                                      className="ui basic red button">Remove</Link>
                                             </div>
                                         </div>
                                     </div>
