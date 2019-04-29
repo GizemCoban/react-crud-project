@@ -2,45 +2,40 @@ import React, {Component} from 'react';
 import MyNavb from "./semantic/MyNavb";
 import {Button, Header} from "semantic-ui-react";
 import {connect} from "react-redux";
-import {fetchTenants} from '../actions'
 import {Link, withRouter} from "react-router-dom";
-import Draggable from 'react-draggable'
+import {fetchTenantAdmins, fetchTenants} from "../actions";
+import Draggable from "react-draggable";
 
-
-class Tenants extends Component {
+class TenantAdmins extends Component {
 
     componentDidMount() {
-        this.props.fetchTenants();
-        //console.log(this.props.tenant)
+        this.props.fetchTenantAdmins();
     }
 
-    handleAddTenant = () => {
-        this.props.history.push('/tenants/add')
+    handleAddtAdmin = () => {
+        this.props.history.push('/tadmins/add')
     };
-    handleDeleteAll = () => {
-        this.props.history.push('/tenants/deleteAll')
-    };
-
-    renderTenants = () => {
-        if (this.props.tenant.length === 0) {
-            return (<div> Tenant Bulunamadı </div>)
+    renderTAdmins = () => {
+        if (this.props.tenantAdmin.length === 0) {
+            return (<div> Tenant Admin Bulunamadı </div>)
         } else {
             return (
-                this.props.tenant.map(tenants => {
+                this.props.tenantAdmin.map(tenants => {
                     return (
                         <Draggable axis="both" key={tenants._id}>
                             <div className="card">
                                 <div className="content">
                                     <div className="header">
-                                        {tenants.tName}
+                                        {tenants.tAdminName}
                                     </div>
                                     <div className="meta">
-                                        Status: {tenants.tStatus === true ? (
-                                        <span style={{color: 'blue'}}>açık</span>) : (
-                                        <span style={{color: 'red'}}>kapalı</span>)}
                                     </div>
                                     <div className="description">
-                                        {tenants.date}
+                                        Tenants
+                                        {tenants.tNameID.length === 0 ? (
+                                            <div>Tenant yok</div>) : (tenants.tNameID.map(((ids) => {
+                                            return (<div> {ids}</div>)
+                                        })))}
                                     </div>
                                 </div>
                                 <div className="extra content">
@@ -60,6 +55,7 @@ class Tenants extends Component {
     };
 
     render() {
+        //console.log(this.props);
         return (
             <div>
                 <MyNavb/>
@@ -71,7 +67,7 @@ class Tenants extends Component {
                         color='red'
                         floated='right'
                         content='Delete All'
-                        onClick={this.handleDeleteAll}
+                        onClick={this.handleAddtAdmin}
                     />
                     <Button
                         size='large'
@@ -80,14 +76,15 @@ class Tenants extends Component {
                         color='green'
                         floated='right'
                         content='Add'
-                        onClick={this.handleAddTenant}
+                        onClick={this.handleAddtAdmin}
                     />
+
                     <Header as='h3'>
-                        All Tenants
+                        All Tenant Admins
                     </Header>
-                    <br/>
+
                     <div className='ui cards'>
-                        {this.renderTenants()}
+                        {this.renderTAdmins()}
                     </div>
                 </div>
             </div>
@@ -95,11 +92,10 @@ class Tenants extends Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
-    return {tenant: Object.values(state.tenant)}
+    return {
+        tenantAdmin: Object.values(state.tenantAdmin)
+    }
 };
 
-
-export default connect(mapStateToProps, {fetchTenants})(withRouter(Tenants));
-
+export default connect(mapStateToProps, {fetchTenantAdmins, fetchTenants})(withRouter(TenantAdmins));

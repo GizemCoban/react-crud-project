@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Menu, Dropdown, Image} from 'semantic-ui-react'
-//import MyModal from './MyModal'
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {logout} from '../../actions'
@@ -19,9 +18,14 @@ class MyNavb extends Component {
         this.handleItemR = this.handleItemR.bind(this);
         this.handleItemT = this.handleItemT.bind(this);
         this.handleItemU = this.handleItemU.bind(this);
+        this.handleItemTA = this.handleItemTA.bind(this);
         //console.log(this.props)
     }
 
+    handleItemTA = (e, {name}) => {
+        (this.setState({activeItem: name}));
+        return this.props.history.push('/tAdmins')
+    };
     handleItemT = (e, {name}) => {
         (this.setState({activeItem: name}));
         return this.props.history.push('/tenants')
@@ -63,7 +67,6 @@ class MyNavb extends Component {
     }
 
     render() {
-        const {isAuthenticated} = this.props.auth;
         const {activeItem} = this.state;
         // console.log(this.state.value);
         return (
@@ -78,6 +81,12 @@ class MyNavb extends Component {
                         name='Tenants'
                         onClick={this.handleItemT}
                         active={activeItem === 'Tenants'}
+                    >
+                    </Menu.Item>
+                    <Menu.Item
+                        name='Tenant Admins'
+                        onClick={this.handleItemTA}
+                        active={activeItem === 'TenantAdmins'}
                     >
                     </Menu.Item>
                     <Menu.Item

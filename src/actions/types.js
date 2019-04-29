@@ -4,3 +4,11 @@ export const FETCH_TENANT = 'FETCH_TENANT';
 export const DELETE_TENANT = 'DELETE_TENANT';
 export const EDIT_TENANT = 'EDIT_TENANT';
 export const ADD_TENANT = 'ADD_TENANT';
+export const DELETE_TENANTS = 'DELETE_TENANTS';
+
+export const FETCH_TADMINS = 'FETCH_TADMINS';
+export const FETCH_TADMIN = 'FETCH_TADMIN';
+export const ADD_TADMIN = 'ADD_TADMIN';
+export const DELETE_TADMIN = 'DELETE_TADMIN';
+export const EDIT_TADMIN = 'EDIT_TADMIN';
+export const DELETE_TADMINS = 'DELETE_TADMINS';

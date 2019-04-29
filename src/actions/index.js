@@ -7,7 +7,10 @@ import {
     EDIT_TENANT,
     FETCH_TENANT,
     FETCH_TENANTS,
-    ADD_TENANT
+    ADD_TENANT,
+    DELETE_TENANTS,
+    ADD_TADMIN,
+    FETCH_TADMINS
 } from './types'
 
 export function setCurrentUser(user) {
@@ -44,6 +47,9 @@ export function logout() {
     }
 }
 
+
+//tenant actions
+
 export const fetchTenants = () => async dispatch => {
     try {
         const response = await axios.get('/api/tenants/getAll');
@@ -77,7 +83,7 @@ export const editTenant = (id, formvalues) => async dispatch => {
 
 export const deleteTenant = (id) => async dispatch => {
     try {
-        const response = await axios.delete(`/api/tenants/delete/${id}`);
+        await axios.delete(`/api/tenants/delete/${id}`);
         dispatch({type: DELETE_TENANT, payload: id})
     } catch (e) {
         console.log(e.message)
@@ -98,3 +104,40 @@ export const addTenant = (formvalues) => async dispatch => {
         return console.log(e.message);
     }
 };
+
+export const deleteTenants = () => async dispatch => {
+    try {
+        const response = await axios.delete('api/tenants/deleteAll');
+        dispatch({type: DELETE_TENANTS, payload: response.data});
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+//tenant admin actions
+
+
+export const fetchTenantAdmins = () => async dispatch => {
+    try {
+        const response = await axios.get('/api/tadmins/getAll');
+        dispatch({type: FETCH_TADMINS, payload: response.data});
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+export const addTenantAdmin = (formvalues) => async dispatch => {
+    //console.log(formvalues);
+    const data = JSON.stringify(formvalues);
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    try {
+        const response = await axios.post('/api/tadmins/add', data, {headers: headers});
+        dispatch({type: ADD_TADMIN, payload: response.data});
+        console.log('eklendi');
+    } catch (e) {
+        return console.log(e.message);
+    }
+};
+

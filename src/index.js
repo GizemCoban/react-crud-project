@@ -17,7 +17,6 @@ const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thun
 // store.subscribe(() => {
 //     console.log('Store Changed', store.getState())
 // });
-window.store=store;
 if (localStorage.jwtToken) {
     setAuthorizationToken(localStorage.jwtToken);
     store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)))

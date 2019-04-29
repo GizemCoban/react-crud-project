@@ -4,7 +4,8 @@ import {
     FETCH_TENANT,
     EDIT_TENANT,
     DELETE_TENANT,
-    ADD_TENANT
+    ADD_TENANT,
+    DELETE_TENANTS
 } from '../actions/types'
 
 export default (state={}, action)=>{
@@ -19,6 +20,8 @@ export default (state={}, action)=>{
             return {...state, [action.payload._id]: action.payload};
         case DELETE_TENANT:
             return _.omit(state, action.payload);
+        case DELETE_TENANTS:
+            return {};
         default:
             return state;
     }
