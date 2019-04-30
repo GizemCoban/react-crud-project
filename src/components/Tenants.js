@@ -40,7 +40,11 @@ class Tenants extends Component {
                                         <span style={{color: 'red'}}>kapalı</span>)}
                                     </div>
                                     <div className="description">
-                                        {tenants.date}
+                                        Admins
+                                        {tenants.adminInfo.length === 0 ? (
+                                            <div>Admin yok</div>) : (Object.values(tenants.adminInfo).map(((tName) => {
+                                            return (<div>{tName}</div>)
+                                        })))}
                                     </div>
                                 </div>
                                 <div className="extra content">

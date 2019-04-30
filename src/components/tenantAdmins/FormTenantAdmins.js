@@ -22,7 +22,7 @@ class FormTenantAdmins extends Component {
             console.log(e)
         }
         this.props.history.push('/tAdmins');
-        dispatch(reset('formTenant'));
+        dispatch(reset('FormTenantAdmins'));
     };
 
     componentDidMount() {
@@ -51,7 +51,7 @@ class FormTenantAdmins extends Component {
                             _.map(this.props.tenant, tenant => ({
                                 key: tenant._id,
                                 text: tenant.tName,
-                                value: tenant._id
+                                value: tenant.tName
                             }))}
                         placeholder='Choose Tenant'
                         button
@@ -86,7 +86,7 @@ class FormTenantAdmins extends Component {
                             <Form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                                 <Form.Group inline>
                                     <Field name='tAdminName' component={this.handletAdminName}/>
-                                    <Field name='tNameID' component={this.handletName}/>
+                                    <Field name='tenantInfo' component={this.handletName}/>
                                 </Form.Group>
                                 <Button type="submit" circular color="teal" floated='right' size='large'>Apply</Button>
                             </Form>

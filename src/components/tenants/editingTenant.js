@@ -3,8 +3,7 @@ import {connect} from "react-redux";
 import {fetchTenant, editTenant} from "../../actions";
 import FormTenant from './FormTenant'
 import * as _ from "lodash";
-import MyPlaceholder from "../semantic/MyPlaceholder";
-import {Loader} from "semantic-ui-react";
+import {history} from "../../utils/history";
 
 class EditingTenant extends Component {
     componentDidMount() {
@@ -17,16 +16,15 @@ class EditingTenant extends Component {
 
     render() {
         // console.log(this.props);
-        if (!this.props.tenant) return (
-            <div>
-                <MyPlaceholder/>
-                <Loader size='massive'>Loading</Loader>
-            </div>);
+        if (!this.props.tenant) return (<>
+            {history.push('/xx')}
+        </>);
         return (
             <div>
+
                 <FormTenant
                     onSubmit={this.onSubmit}
-                    initialValues={_.pick(this.props.tenant, 'tName', 'tStatus')}
+                    initialValues={_.pick(this.props.tenant, 'tName', 'tStatus', 'adminInfo')}
                 />
             </div>
         );

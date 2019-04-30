@@ -11,9 +11,11 @@ class TenantAdmins extends Component {
     componentDidMount() {
         this.props.fetchTenantAdmins();
     }
-
     handleAddtAdmin = () => {
         this.props.history.push('/tadmins/add')
+    };
+    handleDeleteAll = () => {
+        this.props.history.push('/tadmins/deleteAll')
     };
     renderTAdmins = () => {
         if (this.props.tenantAdmin.length === 0) {
@@ -32,17 +34,18 @@ class TenantAdmins extends Component {
                                     </div>
                                     <div className="description">
                                         Tenants
-                                        {tenants.tNameID.length === 0 ? (
-                                            <div>Tenant yok</div>) : (tenants.tNameID.map(((ids) => {
-                                            return (<div> {ids}</div>)
+                                        {tenants.tenantInfo.length === 0 ? (
+                                            <div>Tenant
+                                                yok</div>) : (Object.values(tenants.tenantInfo).map(((tName) => {
+                                            return (<div>{tName}</div>)
                                         })))}
                                     </div>
                                 </div>
                                 <div className="extra content">
                                     <div className="ui two buttons">
-                                        <Link to={`/tenants/edit/${tenants._id}`}
+                                        <Link to={`/tAdmins/edit/${tenants._id}`}
                                               className="ui basic green button">Edit</Link>
-                                        <Link to={`/tenants/delete/${tenants._id}`}
+                                        <Link to={`/tAdmins/delete/${tenants._id}`}
                                               className="ui basic red button">Remove</Link>
                                     </div>
                                 </div>
@@ -67,7 +70,7 @@ class TenantAdmins extends Component {
                         color='red'
                         floated='right'
                         content='Delete All'
-                        onClick={this.handleAddtAdmin}
+                        onClick={this.handleDeleteAll}
                     />
                     <Button
                         size='large'
@@ -95,6 +98,7 @@ class TenantAdmins extends Component {
 const mapStateToProps = (state) => {
     return {
         tenantAdmin: Object.values(state.tenantAdmin)
+
     }
 };
 

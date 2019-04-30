@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Header} from 'semantic-ui-react'
 import MyNavb from './semantic/MyNavb'
+import Stats from './semantic/Stats'
 import Draggable from 'react-draggable'
 import {
     VictoryBar,
@@ -116,6 +117,9 @@ class DashContent extends Component {
                                 </VictoryChart>
                             </div>
                         </Draggable>
+                    </div>
+                    <div className="ui segment">
+                        <Stats/>
                     </div>
                 </div>
             </div>

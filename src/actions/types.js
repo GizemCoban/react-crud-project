@@ -1,4 +1,5 @@
 export const SET_CURRENT_USER='SET_CURRENT_USER';
+
 export const FETCH_TENANTS = 'FETCH_TENANTS';
 export const FETCH_TENANT = 'FETCH_TENANT';
 export const DELETE_TENANT = 'DELETE_TENANT';

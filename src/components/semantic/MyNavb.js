@@ -111,7 +111,7 @@ class MyNavb extends Component {
                         <Dropdown text={this.state.username} selection>
                             <Dropdown.Menu direction='left'>
                                 <Dropdown.Divider/>
-                                <Dropdown.Item text='Çıkış' onClick={this.logout.bind(this)}/>
+                                <Dropdown.Item icon='sign-out alternate' text='Çıkış' onClick={this.logout.bind(this)}/>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Menu.Item>

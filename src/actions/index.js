@@ -10,7 +10,7 @@ import {
     ADD_TENANT,
     DELETE_TENANTS,
     ADD_TADMIN,
-    FETCH_TADMINS
+    FETCH_TADMINS, DELETE_TADMINS, EDIT_TADMIN, FETCH_TADMIN, DELETE_TADMIN
 } from './types'
 
 export function setCurrentUser(user) {
@@ -138,6 +138,46 @@ export const addTenantAdmin = (formvalues) => async dispatch => {
         console.log('eklendi');
     } catch (e) {
         return console.log(e.message);
+    }
+};
+
+export const deleteTenantAdmins = () => async dispatch => {
+    try {
+        const response = await axios.delete('api/tadmins/deleteAll');
+        dispatch({type: DELETE_TADMINS, payload: response.data});
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+export const editTenantAdmin = (id, formvalues) => async dispatch => {
+    const data = JSON.stringify(formvalues);
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    try {
+        const response = await axios.put(`/api/tadmins/edit/${id}`, data, {headers: headers});
+        dispatch({type: EDIT_TADMIN, payload: response.data})
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+
+export const fetchTenantAdmin = (id) => async dispatch => {
+    try {
+        const response = await axios.get(`/api/tadmins/findById/${id}`);
+        dispatch({type: FETCH_TADMIN, payload: response.data})
+    } catch (e) {
+        console.log(e.message)
+    }
+};
+
+export const deleteTenantAdmin = (id) => async dispatch => {
+    try {
+        await axios.delete(`/api/tadmins/delete/${id}`);
+        dispatch({type: DELETE_TADMIN, payload: id})
+    } catch (e) {
+        console.log(e.message)
     }
 };
 

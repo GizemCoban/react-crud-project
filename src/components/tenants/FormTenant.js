@@ -2,13 +2,17 @@ import React from 'react'
 import {Button, Dropdown, Form, Header, Image, Modal} from "semantic-ui-react";
 import {Field, reduxForm, reset} from "redux-form";
 import {withRouter} from "react-router-dom";
+import {fetchTenantAdmins} from "../../actions"
 import MyPlaceholder from "../semantic/MyPlaceholder";
+import {connect} from "react-redux";
+import _ from 'lodash'
 
-class formTenant extends React.Component {
+class FormTenant extends React.Component {
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleClose = this.handleClose.bind(this);
+
     }
 
     onSubmit = async (formValues, dispatch) => {
@@ -20,6 +24,11 @@ class formTenant extends React.Component {
         this.props.history.push('/tenants');
         dispatch(reset('formTenant'));
     };
+
+    componentDidMount() {
+        this.props.fetchTenantAdmins();
+        console.log(this.props.tenantAdmin)
+    }
 
     handletName({input}) {
         return (
@@ -54,21 +63,24 @@ class formTenant extends React.Component {
         )
     };
 
-    handletAdmin({input}) {
-        const options = [
-            {key: 'e', text: 'Enabled', value: true},
-            {key: 'd', text: 'Disabled', value: false}
-        ];
+    handletAdmin = (props) => {
+        const {input} = props;
         return (<div>
                 <Form.Field>
                     <label>T. Admin</label>
                     <Dropdown
                         {...input}
-                        options={options}
+                        options={_.map(this.props.tenantAdmin, tenantAdmin => ({
+                            key: tenantAdmin._id,
+                            text: tenantAdmin.tAdminName,
+                            value: tenantAdmin.tAdminName
+                        }))}
                         placeholder='Tenant Admin'
                         button
+                        clearable
+                        multiple
                         selection
-                        value={input.value}
+                        value={[...input.value]}
                         onChange={(param, data) => input.onChange(data.value)}
                     />
                 </Form.Field>
@@ -99,7 +111,7 @@ class formTenant extends React.Component {
                                 <Form.Group inline>
                                     <Field name='tName' component={this.handletName}/>
                                     <Field name='tStatus' component={this.handletStatus}/>
-                                    <Field name='tAdmin' component={this.handletAdmin}/>
+                                    <Field name='adminInfo' component={this.handletAdmin}/>
                                 </Form.Group>
                                 <Button type="submit" circular color="teal" floated='right' size='large'>Apply</Button>
                             </Form>
@@ -111,7 +123,13 @@ class formTenant extends React.Component {
     }
 }
 
-export default reduxForm({
-    form: 'formTenant'
-})(withRouter(formTenant));
+const mapStateToProps = (state) => {
+    return {tenantAdmin: Object.values(state.tenantAdmin)}
+};
+
+const formWrap = reduxForm({
+    form: 'FormTenant'
+})(withRouter(FormTenant));
+
+export default connect(mapStateToProps, {fetchTenantAdmins})(formWrap);
 

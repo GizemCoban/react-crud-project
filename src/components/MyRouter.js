@@ -17,6 +17,9 @@ import deletingTenant from "./tenants/deletingTenant";
 import TenantAdmins from "./TenantAdmins";
 import deleteAllTenants from './tenants/deleteAllTenants'
 import addingTenantAdmin from "./tenantAdmins/addingTenantAdmin";
+import editingTenantAdmin from "./tenantAdmins/editingTenantAdmin";
+import deletingTenantAdmin from "./tenantAdmins/deletingTenantAdmin";
+import deletingAllTenantAdmins from "./tenantAdmins/deletingAllTenantAdmins";
 
 
 
@@ -39,6 +42,9 @@ class MyRouter extends React.Component {
                     <Route exact strict path="/tenants/deleteAll" component={requireAuth(deleteAllTenants)}/>
 
                     <Route exact strict path="/tAdmins/add" component={requireAuth(addingTenantAdmin)}/>
+                    <Route exact strict path="/tAdmins/edit/:id" component={requireAuth(editingTenantAdmin)}/>
+                    <Route exact strict path="/tAdmins/delete/:id" component={requireAuth(deletingTenantAdmin)}/>
+                    <Route exact strict path="/tAdmins/deleteAll" component={requireAuth(deletingAllTenantAdmins)}/>
                     <Redirect exact from="/" to="/login"/>
                     <Route path='/*' component={ErrorPage}/>
                 </Switch>
