@@ -6,9 +6,10 @@ import './semantic/styling/style.scss'
 class App extends Component {
 
   render() {
-    return (
+      return (<>
       <MyRouter/>
-    )
+          </>
+      )
   }
 }
 
