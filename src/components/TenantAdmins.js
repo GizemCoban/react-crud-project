@@ -85,10 +85,11 @@ class TenantAdmins extends Component {
                     <Header as='h3'>
                         All Tenant Admins
                     </Header>
-
+                    <div className='animated fadeIn'>
                     <div className='ui cards'>
                         {this.renderTAdmins()}
                     </div>
+                </div>
                 </div>
             </div>
         );

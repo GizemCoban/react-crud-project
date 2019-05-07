@@ -10,8 +10,8 @@ class MyNavb extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalOpen: false,
-            username: ''
+            activeName: '',
+            username: '...'
         };
         this.handleRedirectDash = this.handleRedirectDash.bind(this);
         this.handleItemA = this.handleItemA.bind(this);
@@ -42,16 +42,16 @@ class MyNavb extends Component {
         (this.setState({activeItem: name}));
         return this.props.history.push('/authority')
     };
-    //handleClose = () => this.setState({modalOpen: false})
     handleRedirectDash = () => {
         return this.props.history.push('/dashboard')
     };
 
-    //handleOpen = () => this.setState({modalOpen: true})
     async componentDidMount() {
         try {
             const response = await axios.get('api/users/me');
-            this.setState({username: response.data.email})
+            if (this.state.username !== response.data.username) {
+                this.setState({username: response.data.username})
+            }
         } catch (err) {
             if(err.response.status===401){
                 this.props.logout();
@@ -122,10 +122,4 @@ class MyNavb extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        auth: state.auth
-    }
-}
-
-export default connect(mapStateToProps, {logout})(withRouter(MyNavb))
+export default connect(null, {logout})(withRouter(MyNavb))

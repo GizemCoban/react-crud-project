@@ -90,8 +90,10 @@ class Tenants extends Component {
                         All Tenants
                     </Header>
                     <br/>
-                    <div className='ui cards'>
-                        {this.renderTenants()}
+                    <div className='animated fadeIn'>
+                        <div className='ui cards'>
+                            {this.renderTenants()}
+                        </div>
                     </div>
                 </div>
             </div>

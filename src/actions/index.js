@@ -23,7 +23,7 @@ export function setCurrentUser(user) {
 export const loginUser = (formvalues) => async dispatch => {
     const values = JSON.stringify(formvalues);
     const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     };
     try {
         const response = await axios.post('api/users/login', values, {headers: headers});

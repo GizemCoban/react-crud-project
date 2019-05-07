@@ -21,11 +21,11 @@ export default function (ComposedComponent) {
         }
     }
 
-    function MapStateToProps(state) {
+    function mapStateToProps(state) {
         return {
             isAuthenticated: state.auth.isAuthenticated
         }
     }
 
-    return connect(MapStateToProps)(withRouter(Authendicate))
+    return connect(mapStateToProps)(withRouter(Authendicate))
 }

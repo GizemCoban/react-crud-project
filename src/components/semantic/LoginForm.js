@@ -22,9 +22,8 @@ class LoginForm extends React.Component {
 
     handleUserError({error, touched, visited}) {
         if (error && touched && visited) {
-
             return (<div className="ui icon message red">
-                <i className="exclamation icon"/>
+                <i className="exclamation icon"></i>
                 <div className="content">
                     <div className="header">
                         Hata
@@ -72,7 +71,6 @@ class LoginForm extends React.Component {
     };
 
     handleSubmit = async (formValues, dispatch) => {
-        // console.log(this.props.history.location.pathname);
         // console.log(JSON.stringify(formValues));
         const result = await this.props.loginUser(formValues);
         console.log(result);
@@ -87,10 +85,10 @@ class LoginForm extends React.Component {
 
 
     render() {
-        return (<div>
+        return (<>
                 <Form error onSubmit={this.props.handleSubmit(this.handleSubmit)}>
                     <Divider/>
-                    <Field name='email' component={this.handleUsername}/>
+                    <Field name='username' component={this.handleUsername}/>
                     <br/>
                     <Field name='password' component={this.handlePassword}/>
                     <Divider/>
@@ -115,7 +113,7 @@ class LoginForm extends React.Component {
                         </Button>
                     </Modal.Actions>
                 </Modal>
-            </div>
+            </>
         );
     }
 }
