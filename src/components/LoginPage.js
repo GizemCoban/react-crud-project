@@ -6,7 +6,6 @@ import LoginForm from './semantic/LoginForm'
 
 const LoginPage = () => {
     return (
-
         <div className='ortala'>
             <div className="animated fadeIn">
                 <div className='golge'>

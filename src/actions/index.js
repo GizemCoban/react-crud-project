@@ -10,15 +10,31 @@ import {
     ADD_TENANT,
     DELETE_TENANTS,
     ADD_TADMIN,
-    FETCH_TADMINS, DELETE_TADMINS, EDIT_TADMIN, FETCH_TADMIN, DELETE_TADMIN
+    FETCH_TADMINS,
+    DELETE_TADMINS,
+    EDIT_TADMIN,
+    FETCH_TADMIN,
+    DELETE_TADMIN,
+    CLEAR_REDUX_STORE
 } from './types'
 
+
+//action creators
 export function setCurrentUser(user) {
     return {
         type: SET_CURRENT_USER,
         user
     }
 }
+
+export function clearStore() {
+    return {
+        type: CLEAR_REDUX_STORE
+    }
+}
+
+
+//user actions
 
 export const loginUser = (formvalues) => async dispatch => {
     const values = JSON.stringify(formvalues);
@@ -27,9 +43,8 @@ export const loginUser = (formvalues) => async dispatch => {
     };
     try {
         const response = await axios.post('api/users/login', values, {headers: headers});
-        //dispatch({type: LOGIN_USER, payload: response});
         const token = response.data.token;
-        console.log(jwt.decode(token));
+        console.log(response);
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
         dispatch(setCurrentUser(jwt.decode(token)));
@@ -44,6 +59,7 @@ export function logout() {
         localStorage.removeItem('jwtToken');
         setAuthorizationToken(false);
         dispatch(setCurrentUser({}));
+        dispatch(clearStore());
     }
 }
 
@@ -115,7 +131,6 @@ export const deleteTenants = () => async dispatch => {
 };
 
 //tenant admin actions
-
 
 export const fetchTenantAdmins = () => async dispatch => {
     try {

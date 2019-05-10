@@ -5,7 +5,8 @@ import {
     EDIT_TADMIN,
     DELETE_TADMIN,
     ADD_TADMIN,
-    DELETE_TADMINS
+    DELETE_TADMINS,
+    CLEAR_REDUX_STORE
 } from '../actions/types'
 
 export default (state = {}, action) => {
@@ -21,6 +22,8 @@ export default (state = {}, action) => {
         case DELETE_TADMIN:
             return _.omit(state, action.payload);
         case DELETE_TADMINS:
+            return {};
+        case CLEAR_REDUX_STORE:
             return {};
         default:
             return state;

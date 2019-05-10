@@ -11,6 +11,7 @@ class TenantAdmins extends Component {
     componentDidMount() {
         this.props.fetchTenantAdmins();
     }
+
     handleAddtAdmin = () => {
         this.props.history.push('/tadmins/add')
     };
@@ -81,15 +82,15 @@ class TenantAdmins extends Component {
                         content='Add'
                         onClick={this.handleAddtAdmin}
                     />
-
                     <Header as='h3'>
                         All Tenant Admins
                     </Header>
+                    <br/>
                     <div className='animated fadeIn'>
-                    <div className='ui cards'>
-                        {this.renderTAdmins()}
+                        <div className='ui cards'>
+                            {this.renderTAdmins()}
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         );

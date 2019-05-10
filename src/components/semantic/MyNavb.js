@@ -11,7 +11,8 @@ class MyNavb extends Component {
         super(props);
         this.state = {
             activeName: '',
-            username: '...'
+            username: '...',
+            tokenTime: ''
         };
         this.handleRedirectDash = this.handleRedirectDash.bind(this);
         this.handleItemA = this.handleItemA.bind(this);
@@ -49,11 +50,12 @@ class MyNavb extends Component {
     async componentDidMount() {
         try {
             const response = await axios.get('api/users/me');
+            //console.log(response);
             if (this.state.username !== response.data.username) {
                 this.setState({username: response.data.username})
             }
         } catch (err) {
-            if(err.response.status===401){
+            if (err.response.status === 401) {
                 this.props.logout();
             }
             console.log(err.message)

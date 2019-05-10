@@ -7,8 +7,7 @@ const MyModal = props => {
             onClick={props.onDismiss}
             className="ui dimmer modals visible active"
         >
-
-            <div onClick={(e) => e.stopPropagation()} className="ui standart modal visible active ">
+            <div onClick={(e) => e.stopPropagation()} className="ui standart modal visible active">
                 <div className="header">{props.title}</div>
                 <div className="content">
                     {props.content}

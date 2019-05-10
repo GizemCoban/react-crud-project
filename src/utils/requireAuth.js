@@ -7,7 +7,7 @@ export default function (ComposedComponent) {
     class Authendicate extends Component {
         componentWillMount() {
             if (!this.props.isAuthenticated) {
-                this.props.history.push('/login');
+                this.props.history.push('/login')
             }
             if ((this.props.isAuthenticated) && (this.props.history.location.pathname === '/login')) {
                 this.props.history.push('/dashboard')
